@@ -116,9 +116,9 @@ def main(args):
 
     exec_many(pre_cmds, t_vars)
 
-    for ptrn, lines, path in zip(files_patterns, files_lines, files_paths):
-        splice_new_version = replace_first_with(ptrn, newver)
-        is_version_line = partial(re.search, ptrn)
+    for pattern, lines, path in zip(files_patterns, files_lines, files_paths):
+        splice_new_version = replace_first_with(pattern, newver)
+        is_version_line = partial(re.search, pattern)
         new_lines = map(update_matching(is_version_line, splice_new_version), lines)
 
         copyfile(path, "%s.%d.bkp" % (path, epoch_now()))
