@@ -38,13 +38,13 @@ exec_after:
 
 `files` is a list of files that contain a version number which you want to
 increment. `pattern` must be a regexp with a single group, the contents of that
-group will me modified.
+group will be modified.
 `exec_before` and `exec_after` are lists of shell commands to be executed before
 and after writing the new versions to the files. You can use this to automate
 your release workflow, e.g. doing a `git flow release start` before and
-`git flow release finish` after, appending to a changelog).
+`git flow release finish` after or appending to a changelog.
 
-The strings are python 3 [templates](https://docs.python.org/3.1/library/string.html#formatspec) and can have the following arguments:
+The strings in `exec_before` and `exec_after` are python 3 [templates](https://docs.python.org/3.1/library/string.html#formatspec) and can have the following arguments:
 - `oldv` - the previous version
 - `newv` - the new version after the bump
 - `files` - a space separated list of the paths listed in `files`, for the example above it's the string `README.md somefile`
