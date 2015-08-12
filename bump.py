@@ -2,7 +2,7 @@
 
 _VERSION = "0.0.1"
 
-import sys, re, time
+import sys, os, re, time
 from collections import namedtuple
 from operator import attrgetter as get, eq
 from functools import partial
@@ -24,8 +24,8 @@ File = namedtuple("File", ["path", "pattern"])
 def epoch_now(): return int(time.time())
 def flatten(l): return [i for sub in l for i in sub]
 
-def die(msg, *args): print(msg, args, file=sys.stderr); raise BumpError()
-def exit(msg, *args): print(msg, args, file=sys.stderr); raise BumpExit()
+def die(msg, *args): print(msg, *args, file=sys.stderr); raise BumpError()
+def exit(msg, *args): print(msg, *args, file=sys.stderr); raise BumpExit()
 
 def read_conf():
     with open(CFG, "r") as f:
@@ -91,6 +91,10 @@ def exec_many(cmds, t_vars): # execute commands passing template vars
 
 def main(args):
     incr = get_increment(args)
+
+    if (not os.path.isfile(CFG)):
+        exit("No config file found, nothing to do.")
+
     files, pre_cmds, post_cmds = read_conf()
 
     files_paths = list(map(get("path"), files))
